@@ -1,23 +1,28 @@
 package com.devsuperior.demo.entities;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.JoinColumn;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "tb_user")
-public class User {
+public class User implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -105,4 +110,40 @@ public class User {
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
+
+    
+    //Métodos abaixo que deverão ser implmentados por causa da interface UserDetails
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() { //Role implementa GrantedAuthority
+		return roles;
+	}
+
+	@Override
+	public String getUsername() { //defini que meu UserName vai ser o e-mail
+		return email;
+	}
+
+	//esse método não vou trabalhar, assim deixo uma implementação padrão
+	@Override
+	public boolean isAccountNonExpired() {		
+		return true;
+	}
+
+	//esse método não vou trabalhar, assim deixo uma implementação padrão
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	//esse método não vou trabalhar, assim deixo uma implementação padrão
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	//esse método não vou trabalhar, assim deixo uma implementação padrão
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 }

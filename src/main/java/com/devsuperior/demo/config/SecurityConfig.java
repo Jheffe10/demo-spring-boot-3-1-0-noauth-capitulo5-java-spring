@@ -10,7 +10,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-
+//No final criei a classe ResourceServerConfig e migrei esses métodos para lá
+//Assim essa classe ficou dispensável
 @Configuration
 public class SecurityConfig {
 
